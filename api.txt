@@ -1,0 +1,186 @@
+Xy-pms项目接口文档
+接口前缀
+prefix="http://hoverforever.com/Xy-pms/index.php/"
+##################################################
+
+基础接口
+=================================================
+1、登陆接口
+uri: api/v1/login/login
+请求方式：POST
+参数类型：x-www-form-urlencode
+{
+    user_name: "pms account",
+    password: "pms password"
+}
+登陆成功返回数据：
+{
+    status: 0,
+    message: "登陆成功"
+}
+登陆失败返回数据：
+{
+    "status": 1,
+    "message": "登陆失败，账号或者密码错误！"
+}
+
+
+
+工时接口
+=================================================
+1、获取草稿、审核中、已审核、退回的工时记录
+uri: api/v1/labor/listbystate
+请求方式： POST
+参数类型： x-www-form-urlencode
+{
+    page: 1,
+    page_size: 10,
+    state: 1.DRAFT：草稿 2.COMPLETE：已审核 3.INPUTER：退回 4.DRAFT|COMPLETE|INPUTER：审核中
+}
+成功返回数据：
+{
+    "limit": 10,
+    "Rows": [],
+    "start": 0,
+    "Total": 0
+}
+
+2、提交工时
+uri: api/v1/labor/submit
+请求方式： POST
+参数类型： x-www-form-urlencode
+{
+    ids[]: "3366122"
+}
+
+3、删除工时
+uri: api/v1/labor/delete
+同时删除多条记录，例： ids[]: xxxxx ids[]: xxxxx
+参数类型： x-www-form-urlencode
+{
+    ids[]: "3366122"
+}
+
+4、获取工时记录
+uri: api/v1/labor/history
+参数类型： x-www-form-urlencode
+{
+    start_date: "2016-01-01",
+    end_date: "2016-12-31"
+}
+
+5、填写工时
+uri:api/v1/labor/create
+添加多条记录，例：lines[1].duration ; lines[2].duration ... state：DRAFT｜PM （保存操作｜提交操作） timeSheetType：NTS｜OTS （正常工时｜加班工时）
+参数类型： x-www-form-urlencode
+{
+    state: "DRAFT",
+    sheet_time: "2016-03-01",
+    lines[0].duration:"8.0",
+    lines[0].project_id:"1323",
+    lines[0].task_type_key:"SELF_STUDY",
+    lines[0].task_summary:"自学",
+    lines[0].time_sheet_type:"NTS",
+    lines[0].progress:"100"
+}
+
+6、获取工时类型
+uri: api/v1/labor/querylabortype
+填写工时时选择的工时类型 sheetTime 不是必需参数，如果不传，则获取所有的工时类型
+参数类型： x-www-form-urlencode
+{
+    sheetTime: "2016-03-01"
+}
+
+7、修改工时
+uri: api/v1/labor/modify
+id: 工时ID（某天） lines[0].id：工时记录（某条）
+参数类型： x-www-form-urlencode
+{
+    state: "DRAFT",
+    id:"3366593",
+    sheet_time: "2016-03-01",
+    lines[0].duration:"8.0",
+    lines[0].project_id:"1323",
+    lines[0].task_type_key:"SELF_STUDY",
+    lines[0].task_summary:"自学",
+    lines[0].time_sheet_type:"NTS",
+    lines[0].progress:"100",
+    lines[0].id:"734587"
+}
+
+8、计算工时区间长度
+uri: api/v1/labor/countduration
+参数类型： x-www-form-urlencode
+{
+    start_date: "2016-03-01 9:00"
+    end_date: "2016-03-04 18:00",
+    org_type:"HQ",
+    project_id:"1323"
+}
+
+
+休假接口
+=================================================
+1、获取休假
+uri: api/v1/vacation/listbystate
+state: 1.DRAFT：草稿 2.COMPLETE：已审核 3.INPUTER：退回 4.DRAFT|COMPLETE|INPUTER：审核中
+参数类型： x-www-form-urlencode
+{
+    page: 1
+    page_size: 10,
+    state:"DRAFT"
+}
+
+2、修改休假
+uri: api/v1/vacation/modify
+参数类型： x-www-form-urlencode
+{
+    project_id: "1",
+    leave_type: "REST",
+    reson:"testtest",
+    submit_type:"DRAFT",
+    start_date:"2016-03-04 9:00:00",
+    end_date:"2016-03-04 18:00:00",
+    duration:"8",
+    id:"3366623"
+}
+
+3、获取休假可填项目
+uri:api/v1/vacation/listproject
+不需要传参数
+
+4、填写休假
+uri:api/v1/vacation/create
+参数类型： x-www-form-urlencode
+{
+    project_id: "1",
+    leave_type: "REST",
+    reson:"testtest",
+    submit_type:"DRAFT",
+    start_date:"2016-03-04 9:00:00",
+    end_date:"2016-03-04 18:00:00",
+    duration:"8"
+}
+
+5、获取假期和对应的补休日期
+uri: api/v1/vacation/listholiday
+参数类型： x-www-form-urlencode
+{
+    start_date:"2016-03-04",
+    end_date:"2016-03-04"
+}
+
+6、删除休假
+uri: api/v1/vacation/delete
+参数类型： x-www-form-urlencode
+{
+    ids[]:"3366623"
+}
+
+
+
+员工接口
+=================================================
+1、获取个人信息
+uri:api/v1/user/setpersonmessage
