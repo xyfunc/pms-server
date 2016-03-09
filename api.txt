@@ -50,7 +50,11 @@ uri: api/v1/labor/submit
 请求方式： POST
 参数类型： x-www-form-urlencode
 {
-    ids[]: "3366122"
+     id: "3366122"
+}
+返回：
+{
+    "result": "提交成功！"
 }
 
 3、删除工时
@@ -58,7 +62,11 @@ uri: api/v1/labor/delete
 同时删除多条记录，例： ids[]: xxxxx ids[]: xxxxx
 参数类型： x-www-form-urlencode
 {
-    ids[]: "3366122"
+    id: "3366122"
+}
+返回：
+{
+    "result": "提交成功！"
 }
 
 4、获取工时记录
@@ -68,6 +76,7 @@ uri: api/v1/labor/history
     start_date: "2016-01-01",
     end_date: "2016-12-31"
 }
+返回值太长，不列出咯。。。
 
 5、填写工时
 uri:api/v1/labor/create
@@ -83,14 +92,25 @@ uri:api/v1/labor/create
     lines[0].time_sheet_type:"NTS",
     lines[0].progress:"100"
 }
+正确的返回：
+{
+    "result": "操作成功！"
+}
+错误一：
+{
+    "error": "3月7日填写的正常工时大于8小时！"
+}
 
 6、获取工时类型
 uri: api/v1/labor/querylabortype
 填写工时时选择的工时类型 sheetTime 不是必需参数，如果不传，则获取所有的工时类型
 参数类型： x-www-form-urlencode
 {
-    sheetTime: "2016-03-01"
+    sheet_time: "2016-03-01"
 }
+
+返回值：
+返回值太长我不敢贴出来
 
 7、修改工时
 uri: api/v1/labor/modify

@@ -26,6 +26,24 @@ class BaseController extends Controller {
         foreach($paramArray as $key=>$value){
             array_push($str,"$key=$value");
         }
+
         return join("&",$str);
+    }
+
+    public function getPostArray($paramArray){
+        $jsessionId = session('JSESSIONID');
+        $array = array(
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_NOBODY => true,
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => $this->mergePostParams($paramArray),
+            CURLOPT_HTTPHEADER => array(
+                "cache-control: no-cache",
+                "content-type: application/x-www-form-urlencoded",
+                "Cookie:JSESSIONID=$jsessionId",
+            ),
+        );
+        return $array;
     }
 } 
