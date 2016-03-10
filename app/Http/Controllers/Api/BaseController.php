@@ -18,6 +18,7 @@ class BaseController extends Controller {
         curl_setopt_array($curl,$array );
         $response = curl_exec($curl);
         curl_close($curl);
+        header("Access-Control-Allow-Origin:*");
         return $response;
     }
 
