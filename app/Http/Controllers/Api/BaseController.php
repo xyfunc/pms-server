@@ -27,7 +27,9 @@ class BaseController extends Controller {
         foreach($paramArray as $key=>$value){
             array_push($str,"$key=$value");
         }
-
+        if(count($str) == 0){
+            return "";
+        }
         return join("&",$str);
     }
 

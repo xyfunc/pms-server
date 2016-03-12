@@ -195,7 +195,7 @@ uri: api/v1/vacation/listholiday
 uri: api/v1/vacation/delete
 参数类型： x-www-form-urlencode
 {
-    ids[]:"3366623"
+    id:"3366623"
 }
 
 
